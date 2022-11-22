@@ -1,6 +1,7 @@
 var userAddress; 
 
 var contractAddress = "0xf4464DDf5a8921d0a258B86CFA7252EfDE018c44";
+var cost = BigInt(30000000000000000);
 
 var gas_price;
 
@@ -858,10 +859,11 @@ async function claim() {
 
     let mint_amount = 1; // If more than one desired pull from dom 
 
+    let total_cost = cost * mint_amount;
     document.getElementById('connect').innerHTML = "Minting";
     try{
         await window.contract.methods.mint(mint_amount)
-        .send({ "from": userAddress, gasPrice: gas_price })
+        .send({ "from": userAddress, value: total_cost, gasPrice: gas_price })
         .then( () => {
             document.getElementById('connect').innerHTML = "Minted";
         });
